@@ -17,12 +17,24 @@ import { LoginComponent } from './rutas/login/login.component';
 import { ClienteComponent } from './rutas/cliente/cliente.component';
 import {PasswordModule} from 'primeng/password';
 import {InputTextModule} from 'primeng/inputtext';
+import {MatDialogModule} from '@angular/material/dialog';
+import { RegistroComponent } from './rutas/login/registro/registro.component';
+import {  MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button'
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { MessageService } from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ClienteComponent
+    ClienteComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +47,22 @@ import {InputTextModule} from 'primeng/inputtext';
     ButtonModule,
     CardModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule
+
     
   ],
-  providers: [],
+  providers: [
+
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

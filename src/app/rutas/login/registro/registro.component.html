@@ -1,0 +1,52 @@
+
+<div mat-dialog-content>
+  <p>REGISTRO NUEVO USUARIO</p>
+  <mat-form-field>
+    <mat-label>Usuario</mat-label>
+    <input matInput [(ngModel)]="data.user">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cédula</mat-label>
+    <input matInput [(ngModel)]="data.cedula">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Correo</mat-label>
+    <input matInput [(ngModel)]="data.correo">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Telefono</mat-label>
+    <input matInput [(ngModel)]="data.telefono">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Dirección</mat-label>
+    <input matInput [(ngModel)]="data.direccion">
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Contraseña</mat-label>
+    <input type="password" matInput [(ngModel)]="data.pass">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Repite Contraseña</mat-label>
+    <input type="password" matInput [(ngModel)]="data.pass2">
+  </mat-form-field>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+    <div *ngIf="data">
+        <button mat-button [mat-dialog-close]="data" cdkFocusInitial >Registrar</button>
+    </div>
+</div>

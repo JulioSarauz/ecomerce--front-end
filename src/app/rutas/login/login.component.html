@@ -18,20 +18,16 @@
             <label for="float-input">Contraseña</label>
         </span>
 
-        <button pButton pRipple type="button" label="Success" class="p-button-outlined p-button-success" style="margin-top: 10%; width: 82%;"></button>
+        <button pButton pRipple type="button" label="INGRESAR" class="p-button-outlined p-button-success" style="margin-top: 10%; width: 82%;"></button>
+        
+        <button pButton pRipple type="button" label="¿No tienes cuenta?" class="p-button-outlined p-button-warning" style="margin-top: 10%; width: 82%;" (click)="openDialog()"></button>
+        
     
-        <!--div class="p-field p-col-12 p-md-4" >
-            <span class="p-float-label">
-                <input type="password" pPassword [(ngModel)]="pass"/>
-                <label for="inputtext">Contraseña</label>
-            </span>
-        </div-->
-
     </p-card>
 
 </div>
        
     
-
+<p-toast></p-toast>
 
   
