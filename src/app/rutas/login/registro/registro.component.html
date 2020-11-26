@@ -1,52 +1,61 @@
+  <body style="
+  background-image: url('../../../../assets/fondo2.jfif'); 
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;"
+  >
 
-<div mat-dialog-content>
-  <p>REGISTRO NUEVO USUARIO</p>
-  <mat-form-field>
-    <mat-label>Usuario</mat-label>
-    <input matInput [(ngModel)]="data.user">
-  </mat-form-field>
+  <div mat-dialog-content style="text-align: center;">
+    <p><b>REGISTRO NUEVO USUARIO</b></p>
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px; width: 50%;">
+      <mat-label style="color: white;">Usuario</mat-label>
+      <input matInput [(ngModel)]="data.user" style="color: white; font-size: 25px; ">
+    </mat-form-field>
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Nombre</mat-label>
+      <input matInput [(ngModel)]="data.name" style="color: white; font-size: 25px;">
+    </mat-form-field>
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Cédula</mat-label>
+      <input matInput [(ngModel)]="data.cedula" style="color: white; font-size: 25px;">
+    </mat-form-field>
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Correo</mat-label>
+      <input matInput [(ngModel)]="data.correo" style="color: white; font-size: 25px;">
+    </mat-form-field>
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Telefono</mat-label>
+      <input matInput [(ngModel)]="data.telefono" style="color: white; font-size: 25px;">
+    </mat-form-field>
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Dirección</mat-label>
+      <input matInput [(ngModel)]="data.direccion" style="color: white; font-size: 25px;">
+    </mat-form-field>
+  
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Contraseña</mat-label>
+      <input type="password" matInput [(ngModel)]="data.pass" style="color: white;">
+    </mat-form-field>
+  
+    <mat-form-field style="background-color: rgba(125,88,34,0.4); font-size: 20px;  width: 50%;">
+      <mat-label style="color: white;">Repite Contraseña</mat-label>
+      <input type="password" matInput [(ngModel)]="data.pass2" style="color: white;">
+    </mat-form-field>
+  
+  
+  </div>
+  <div mat-dialog-actions style="background-color:black; color: white;">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+      <div *ngIf="data">
+          <button mat-button [mat-dialog-close]="data" cdkFocusInitial >Registrar</button>
+      </div>
+  </div>
 
-  <mat-form-field>
-    <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="data.name">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Cédula</mat-label>
-    <input matInput [(ngModel)]="data.cedula">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Correo</mat-label>
-    <input matInput [(ngModel)]="data.correo">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Telefono</mat-label>
-    <input matInput [(ngModel)]="data.telefono">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Dirección</mat-label>
-    <input matInput [(ngModel)]="data.direccion">
-  </mat-form-field>
-
-
-  <mat-form-field>
-    <mat-label>Contraseña</mat-label>
-    <input type="password" matInput [(ngModel)]="data.pass">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Repite Contraseña</mat-label>
-    <input type="password" matInput [(ngModel)]="data.pass2">
-  </mat-form-field>
-
-
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-    <div *ngIf="data">
-        <button mat-button [mat-dialog-close]="data" cdkFocusInitial >Registrar</button>
-    </div>
-</div>
+</body>

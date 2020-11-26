@@ -27,14 +27,19 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { MessageService } from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
-
+import { RouterModule, Routes } from '@angular/router';
+import {DataViewModule} from 'primeng/dataview';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ClienteComponent,
-    RegistroComponent
+    RegistroComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,14 @@ import {ToastModule} from 'primeng/toast';
     MatButtonModule,
     MessagesModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    RouterModule,
+    DataViewModule,
+    MegaMenuModule,
+    MatDividerModule,
+    MatGridListModule,
+    MatListModule,
+    HttpClientModule,
 
     
   ],

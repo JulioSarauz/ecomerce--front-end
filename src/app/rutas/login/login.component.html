@@ -1,33 +1,51 @@
 
-    
-    
-    
+<body>
 
 
-    
-<div style="margin-left: 30%; margin-top: 10%;">
-   
-    <p-card [style]="{'width':'30%', 'padding-left':'4%'}">
-        <span class="p-float-label" style="margin-top: 20%;">
-            <input id="float-input" type="text" pInputText> 
-            <label for="float-input">Usuario</label>
-        </span>
+    <div style="margin-left: 0%; margin-top: 10%;">
         
-        <span class="p-float-label" style="margin-top: 20%;">
-            <input id="float-input" type="text" pInputText> 
-            <label for="float-input">Contraseña</label>
-        </span>
-
-        <button pButton pRipple type="button" label="INGRESAR" class="p-button-outlined p-button-success" style="margin-top: 10%; width: 82%;"></button>
         
-        <button pButton pRipple type="button" label="¿No tienes cuenta?" class="p-button-outlined p-button-warning" style="margin-top: 10%; width: 82%;" (click)="openDialog()"></button>
-        
-    
-    </p-card>
-
-</div>
+            <p-card [style]="{'width':'60%', 'padding-left':'1%', 'background-color':'rgba(218,147,92,0.3)'}">
+                
+                
+                
+                <mat-list role="list">
+                    <mat-list-item> 
+                        <span class="p-float-label" >
+                            <input id="float-input" type="text" style="width: 260%;"  pInputText> 
+                            <label for="float-input" style="color: #EE3C61;"><b>USUARIO</b></label>
+                        </span>
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item> 
+                        <span class="p-float-label" >
+                            <input  id="float-input" type="password" style="width: 260%;"   pInputText> 
+                            <label for="float-input" style="color: #EE3C61;"><b>CONTRASEÑA</b></label>
+                        </span>    
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item > 
+                        <button pButton pRipple type="button" label="INGRESAR" class="p-button-outlined p-button-success" style="width: 95%; border-color: blue; color:blue" (click)="ingresar()"></button>    
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item> 
+                        <button pButton pRipple label="¿No tienes cuenta?" style="width: 95%; text-decoration: none;padding: 0; border: none; background: none; color:blue;" (click)="openDialog()"></button>
+                    </mat-list-item>
+                   </mat-list>
+               
+                
+            </p-card>
+     
        
     
+    </div>
+
+
+</body>
+
+
+
+       
 <p-toast></p-toast>
 
   

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { RegistroComponent } from './registro/registro.component';
+import { LoginService } from '../../modelo/servicios/login/login.service';
 
 
 @Component({
@@ -19,10 +21,11 @@ export class LoginComponent implements OnInit {
   pass:string;
   pass2:string;
 
-
   constructor(
     public dialog: MatDialog,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private router:Router,
+    public loginservice:LoginService
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +34,16 @@ export class LoginComponent implements OnInit {
 
   }
 
- 
+  ingresar(){
+    this.mostrarMensaje(1,'Bienvenido','Logeo Exitoso!');
+    this.loginservice.buscarUsuarios().subscribe(usuarios=>{
+        for(let user of usuarios ){
+
+        }
+        
+    });
+    //this.router.navigate(['cliente']);
+  }
 
   mostrarMensaje(tipo:number,msm:string,tit:string) {
     if(tipo == 1)
@@ -44,7 +56,7 @@ export class LoginComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RegistroComponent, {
-      width: '250px',
+      width: '800px',
       data: {
         user: this.user,
         name: this.name,
@@ -58,6 +70,8 @@ export class LoginComponent implements OnInit {
       }
     });
 
+
+    //REGISTRO
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
@@ -73,17 +87,24 @@ export class LoginComponent implements OnInit {
         ){
 
           if(result.pass == result.pass2){
+              
 
-            console.log("TIENE DATOS");
+          
+            console.log("****SERVICIO*****");
+            console.log(this.loginservice.ingresoUsuario(result.user,result.pass));
+            
+            
+            
           }else{
-            this.mostrarMensaje(3,'Las contraseñas no son iguales','Contraseña Incorrecta');
+            this.mostrarMensaje(3,'Contraseña Incorrecta','Las contraseñas no son iguales');
           }
         }else{
           console.log("NO TIENE DATOS");
-          this.mostrarMensaje(3,'Debe completar todos los campos','Datos Incompletos');
+          this.mostrarMensaje(3,'Datos Incompletos','Debe completar todos los campos');
         }
     });
   }
 
 
 }
+
