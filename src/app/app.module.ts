@@ -10,7 +10,7 @@ import {MegaMenuModule} from 'primeng/megamenu';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PickListModule} from 'primeng/picklist';
 import {InputTextareaModule} from 'primeng/inputtextarea';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import { LoginComponent } from './rutas/login/login.component';
@@ -34,6 +34,18 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductoComponent } from './rutas/cliente/producto/producto.component';
+import {DropdownModule} from 'primeng/dropdown';
+import {RatingModule} from 'primeng/rating';
+import { RippleModule } from 'primeng/ripple';
+import {PanelModule} from 'primeng/panel';
+import {DialogModule} from 'primeng/dialog';
+import { TarjetaComponent } from './rutas/cliente/tarjeta/tarjeta.component';
+import {TableModule} from 'primeng/table';
+import { PagoComponent } from './rutas/cliente/pago/pago.component';
+import {MatStepperModule} from '@angular/material/stepper';
+
+
+
 
 @NgModule({
   declarations: [
@@ -42,6 +54,8 @@ import { ProductoComponent } from './rutas/cliente/producto/producto.component';
     ClienteComponent,
     RegistroComponent,
     ProductoComponent,
+    TarjetaComponent,
+    PagoComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +84,16 @@ import { ProductoComponent } from './rutas/cliente/producto/producto.component';
     MatGridListModule,
     MatListModule,
     HttpClientModule,
-
+    DropdownModule,
+    RatingModule,
+    TableModule,
+    PanelModule,
+    DialogModule,
+    RippleModule,
+    MatStepperModule,
+    FormsModule,
+    FormControl,
+    ReactiveFormsModule
     
   ],
   providers: [

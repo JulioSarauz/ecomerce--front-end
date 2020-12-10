@@ -1,0 +1,79 @@
+<table>
+    <tr>
+        <td colspan="2"><h1>Ingresa un nuevo producto</h1></td>
+    </tr>
+    <tr>
+        <td>
+            <div mat-dialog-content>
+                
+                <mat-form-field>
+                  <mat-label>Código</mat-label>
+                  <input matInput [(ngModel)]="data.codigo">
+                </mat-form-field>
+            </div>
+        </td>
+        <td>
+            <div mat-dialog-content>
+                <mat-form-field>
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [(ngModel)]="data.fecha">
+                  </mat-form-field>
+                 
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div mat-dialog-content>
+                <mat-form-field>
+                  <mat-label>CVV</mat-label>
+                  <input matInput [(ngModel)]="data.cvv">
+                </mat-form-field>
+            </div>
+              
+        </td>
+        <td></td>
+        <td>
+            <p-button label="Añadir" icon="pi pi-plus" styleClass="p-button" (click)="crearTarjeta()"></p-button>
+        </td>
+    </tr>
+</table>
+
+
+    
+
+
+
+
+<div class="card">
+    <h5>Implicit Pagination</h5>
+    <p-table [value]="customers" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" 
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>CODIGO</th>
+                <th>FECHA</th>
+                <th>CVV</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>{{customer.codigo}}</td>
+                <td>{{customer.fecha}}</td>
+                <td>{{customer.cvv}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+  <div mat-dialog-actions>
+    <button pButton pRipple type="button" label="Salir" class="p-button-rounded p-button-danger"  (click)="onNoClick()"></button>
+  </div>

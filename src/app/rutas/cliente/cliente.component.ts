@@ -3,6 +3,8 @@ import { MegaMenuItem, SelectItem, MessageService } from 'primeng/api';
 import { ProductoComponent } from './producto/producto.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductoService } from '../../modelo/servicios/producto/producto.service';
+import { TarjetaComponent } from './tarjeta/tarjeta.component';
+import { PagoComponent } from './pago/pago.component';
 
 @Component({
   selector: 'app-cliente',
@@ -13,7 +15,6 @@ export class ClienteComponent implements OnInit {
 
 
   products: Product[];
-  sortOptions: SelectItem[];
   sortOrder: number;
   sortField: string;
   items: MegaMenuItem[];
@@ -29,11 +30,7 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit(): void {
     //this.productService.getProducts().then(data => this.products = data);
-    this._productsService.obtenerProductos().subscribe((data)=>{
-      console.log(data.data);
-      this.products = data.data;
-      
-    });
+    this._productsService.obtenerProductos().subscribe((data)=>{this.products = data.data;});
     
     this.clienteDta = JSON.parse(localStorage.getItem('ClienteData'));
 
@@ -41,10 +38,7 @@ export class ClienteComponent implements OnInit {
     this.Nombre = this.clienteDta.fk_cliente.nombres;
     this.mostrarMensaje(1,'Bienvenido','Logeo Exitoso!');
     this.cargaritem();
-    this.sortOptions = [
-        {label: 'Price High to Low', value: '!price'},
-        {label: 'Price Low to High', value: 'price'}
-    ];
+
   }
 
 
@@ -73,14 +67,14 @@ export class ClienteComponent implements OnInit {
   cargaritem(){
     this.items = [
       {
-        label:'Bienbenido '+this.Nombre, icon: 'pi pi-fw pi-user'
+        label:'Bienvenido '+this.Nombre, icon: 'pi pi-fw pi-user'
 
-      } ,
+      },
       {
           label: 'Opciones', icon: 'pi pi-fw pi-cog',
           items: [
               [ 
-                {
+                  {
                       label: 'Opciones', 
                       items:[{label:'Salir', url:'login'}]
                   }
@@ -102,17 +96,61 @@ export class ClienteComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.name = result;
-      console.log(result);
+      if(result){
+        this._productsService.IngresarProducto(result.nombre, result.descripcion, result.precio).subscribe((ingreo)=>{
+          this._productsService.obtenerProductos().subscribe((data)=>{
+
+          console.log(data);
+            this.products = data.data;
+          });
+        });
+       
+      }else{
+     
+        this.mostrarMensaje(3,"ERROR","Ingrese datos");
+        
+      }
       
     });
   }
 
 
+
+
+
+  openDialogTarjeta(): void {
+    
+    
+    const dialogRef = this.dialog.open(TarjetaComponent, {
+      width: '800px',
+      height: '80%',
+      data: {name: "Tarjetas"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+       
+    });
+  }
+
+
+
+  obtenerPaga(): void {
+    
+    
+    const dialogRef = this.dialog.open(PagoComponent, {
+      width: '800px',
+      height: '80%',
+      data: {name: "Tarjetas"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+       
+    });
+  }
+
+
+
 }
-
-
 
 export interface Product {
   name:string;
@@ -124,4 +162,16 @@ export interface DialogData {
   nombre:string;
   descripcion:string;
   precio:string;
+}
+
+export interface TarjetaData{
+  codigo:string;
+  fecha:number;
+  cvv:number;
+}
+
+
+export interface pagoData{
+  id_pago:string;
+  tipo:number;
 }

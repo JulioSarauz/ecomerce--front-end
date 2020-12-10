@@ -13,16 +13,13 @@ export class ProductoService {
   constructor(private http: HttpClient) { }
 
 
-  IngresarProducto(nombre,descripcion,precio){
+  IngresarProducto(nombre,descripcion,precio): Observable<any>{
     this.url=`${environment.host}/products`;
     return this.http.post(this.url,{
       nombre:nombre,
       descripcion:descripcion,
-      precio:precio
-    }).subscribe(res=>{
-      console.log(res);
-      
-      return res;
+      precio:precio,
+      estado:1
     });
   }
 
