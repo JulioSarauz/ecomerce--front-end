@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <h1>Ingresa un nuevo producto</h1>
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="data.nombre">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <input matInput [(ngModel)]="data.descripcion">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input matInput [(ngModel)]="data.precio">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+</div>

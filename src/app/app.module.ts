@@ -33,6 +33,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductoComponent } from './rutas/cliente/producto/producto.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     ClienteComponent,
     RegistroComponent,
+    ProductoComponent,
   ],
   imports: [
     BrowserModule,

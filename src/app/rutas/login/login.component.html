@@ -12,14 +12,14 @@
                 <mat-list role="list">
                     <mat-list-item> 
                         <span class="p-float-label" >
-                            <input id="float-input" type="text" style="width: 260%;"  pInputText> 
+                            <input id="float-input" type="text" style="width: 260%;"  [(ngModel)]="ingresoUsuario" pInputText required> 
                             <label for="float-input" style="color: #EE3C61;"><b>USUARIO</b></label>
                         </span>
                     </mat-list-item>
                     <br>
                     <mat-list-item> 
                         <span class="p-float-label" >
-                            <input  id="float-input" type="password" style="width: 260%;"   pInputText> 
+                            <input  id="float-input" type="password" style="width: 260%;"  [(ngModel)]="ingresoContra"  pInputText required> 
                             <label for="float-input" style="color: #EE3C61;"><b>CONTRASEÑA</b></label>
                         </span>    
                     </mat-list-item>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { RegistroComponent } from './registro/registro.component';
 import { LoginService } from '../../modelo/servicios/login/login.service';
+import { ClienteService } from '../../modelo/servicios/cliente/cliente.service';
 
 
 @Component({
@@ -20,12 +21,17 @@ export class LoginComponent implements OnInit {
   direccion: string;
   pass:string;
   pass2:string;
+//---------------
+  ingresoUsuario:string;
+  ingresoContra:string;
+
 
   constructor(
     public dialog: MatDialog,
     public messageService: MessageService,
     private router:Router,
-    public loginservice:LoginService
+    public loginservice:LoginService,
+    public _clienteService: ClienteService
   ) { }
 
   ngOnInit(): void {
@@ -35,14 +41,27 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(){
-    this.mostrarMensaje(1,'Bienvenido','Logeo Exitoso!');
+    let exito = 0;
     this.loginservice.buscarUsuarios().subscribe(usuarios=>{
-        for(let user of usuarios ){
+      
+      console.log(usuarios.data);
+        for(let user of usuarios.data ){
 
+           if(user.user == this.ingresoUsuario){
+             if(user.pass == this.ingresoContra){
+              exito = 1;
+              console.log(JSON.stringify(user));
+              
+              localStorage.setItem('ClienteData',JSON.stringify(user));
+              this.router.navigate(['cliente']);
+             }
+           }  
         }
+        if(exito===0)
+        this.mostrarMensaje(3,'ERROR','Datos incorrectos');
         
     });
-    //this.router.navigate(['cliente']);
+    //
   }
 
   mostrarMensaje(tipo:number,msm:string,tit:string) {
@@ -74,7 +93,6 @@ export class LoginComponent implements OnInit {
     //REGISTRO
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      console.log(result);
       if(
         result.user !== undefined &&
         result.name !== undefined &&
@@ -90,9 +108,12 @@ export class LoginComponent implements OnInit {
               
 
           
-            console.log("****SERVICIO*****");
-            console.log(this.loginservice.ingresoUsuario(result.user,result.pass));
+              this.guardarInfo(result);
             
+
+
+            
+            this.mostrarMensaje(1,'Exito','Su cuenta fue creada!');
             
             
           }else{
@@ -105,6 +126,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
+
+  async guardarInfo(result){
+    console.log("****SERVICIO*****");
+    await this.loginservice.ingresoUsuario(result.user,result.pass).subscribe((newuser)=>{
+      this.loginservice.buscarUsuarios().subscribe((user)=>{
+        let idUsuario=user.data.length;
+        console.log(user.data.lenght);
+        
+        console.log(idUsuario);
+        
+        this._clienteService.ingresoCliente(result.name, result.cedula, result.correo, result.telefono, result.direccion,idUsuario);
+      });
+    });
+    
+       
+  }
 
 }
 

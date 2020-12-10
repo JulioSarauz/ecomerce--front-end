@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MegaMenuItem, SelectItem } from 'primeng/api';
+import { MegaMenuItem, SelectItem, MessageService } from 'primeng/api';
+import { ProductoComponent } from './producto/producto.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductoService } from '../../modelo/servicios/producto/producto.service';
 
 @Component({
   selector: 'app-cliente',
@@ -14,11 +17,29 @@ export class ClienteComponent implements OnInit {
   sortOrder: number;
   sortField: string;
   items: MegaMenuItem[];
+  clienteDta:any;
+  Nombre:string;
+  name:string
 
-  constructor() { }
+  constructor(
+      private messageService:MessageService,
+      public dialog: MatDialog,
+      private readonly _productsService:ProductoService
+  ) { }
 
   ngOnInit(): void {
     //this.productService.getProducts().then(data => this.products = data);
+    this._productsService.obtenerProductos().subscribe((data)=>{
+      console.log(data.data);
+      this.products = data.data;
+      
+    });
+    
+    this.clienteDta = JSON.parse(localStorage.getItem('ClienteData'));
+
+    console.log(this.clienteDta);
+    this.Nombre = this.clienteDta.fk_cliente.nombres;
+    this.mostrarMensaje(1,'Bienvenido','Logeo Exitoso!');
     this.cargaritem();
     this.sortOptions = [
         {label: 'Price High to Low', value: '!price'},
@@ -27,6 +48,14 @@ export class ClienteComponent implements OnInit {
   }
 
 
+  mostrarMensaje(tipo:number,msm:string,tit:string) {
+    if(tipo == 1)
+    this.messageService.add({severity:'success', summary:msm, detail:tit});
+    if(tipo == 2)
+    this.messageService.add({severity:'warn', summary:msm, detail:tit});
+    if(tipo == 3)
+    this.messageService.add({severity:'error', summary:msm, detail:tit});
+  }
   
   onSortChange(event) {
     let value = event.value;
@@ -44,111 +73,16 @@ export class ClienteComponent implements OnInit {
   cargaritem(){
     this.items = [
       {
-          label: 'Videos', icon: 'pi pi-fw pi-video',
-          items: [
-              [
-                  {
-                      label: 'Video 1',
-                      items: [{label: 'Video 1.1'}, {label: 'Video 1.2'}]
-                  },
-                  {
-                      label: 'Video 2',
-                      items: [{label: 'Video 2.1'}, {label: 'Video 2.2'}]
-                  }
-              ],
-              [
-                  {
-                      label: 'Video 3',
-                      items: [{label: 'Video 3.1'}, {label: 'Video 3.2'}]
-                  },
-                  {
-                      label: 'Video 4',
-                      items: [{label: 'Video 4.1'}, {label: 'Video 4.2'}]
-                  }
-              ]
-          ]
-      },
+        label:'Bienbenido '+this.Nombre, icon: 'pi pi-fw pi-user'
+
+      } ,
       {
-          label: 'Users', icon: 'pi pi-fw pi-users',
+          label: 'Opciones', icon: 'pi pi-fw pi-cog',
           items: [
-              [
-                  {
-                      label: 'User 1',
-                      items: [{label: 'User 1.1'}, {label: 'User 1.2'}]
-                  },
-                  {
-                      label: 'User 2',
-                      items: [{label: 'User 2.1'}, {label: 'User 2.2'}]
-                  },
-              ],
-              [
-                  {
-                      label: 'User 3',
-                      items: [{label: 'User 3.1'}, {label: 'User 3.2'}]
-                  },
-                  {
-                      label: 'User 4',
-                      items: [{label: 'User 4.1'}, {label: 'User 4.2'}]
-                  }
-              ],
-              [
-                  {
-                      label: 'User 5',
-                      items: [{label: 'User 5.1'}, {label: 'User 5.2'}]
-                  },
-                  {
-                      label: 'User 6',
-                      items: [{label: 'User 6.1'}, {label: 'User 6.2'}]
-                  }
-              ]
-          ]
-      },
-      {
-          label: 'Events', icon: 'pi pi-fw pi-calendar',
-          items: [
-              [
-                  {
-                      label: 'Event 1',
-                      items: [{label: 'Event 1.1'}, {label: 'Event 1.2'}]
-                  },
-                  {
-                      label: 'Event 2',
-                      items: [{label: 'Event 2.1'}, {label: 'Event 2.2'}]
-                  }
-              ],
-              [
-                  {
-                      label: 'Event 3',
-                      items: [{label: 'Event 3.1'}, {label: 'Event 3.2'}]
-                  },
-                  {
-                      label: 'Event 4',
-                      items: [{label: 'Event 4.1'}, {label: 'Event 4.2'}]
-                  }
-              ]
-          ]
-      },
-      {
-          label: 'Settings', icon: 'pi pi-fw pi-cog',
-          items: [
-              [
-                  {
-                      label: 'Setting 1',
-                      items: [{label: 'Setting 1.1'}, {label: 'Setting 1.2'}]
-                  },
-                  {
-                      label: 'Setting 2',
-                      items: [{label: 'Setting 2.1'}, {label: 'Setting 2.2'}]
-                  },
-                  {
-                      label: 'Setting 3',
-                      items: [{label: 'Setting 3.1'}, {label: 'Setting 3.2'}]
-                  }
-              ],
-              [
-                  {
-                      label: 'Technology 4',
-                      items: [{label: 'Setting 4.1'}, {label: 'Setting 4.2'}]
+              [ 
+                {
+                      label: 'Opciones', 
+                      items:[{label:'Salir', url:'login'}]
                   }
               ]
           ]
@@ -156,19 +90,38 @@ export class ClienteComponent implements OnInit {
   ]
   }
 
+
+
+  openDialog(): void {
+    
+    
+    const dialogRef = this.dialog.open(ProductoComponent, {
+      width: '250px',
+      height: '50%',
+      data: {name: "Prods"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.name = result;
+      console.log(result);
+      
+    });
+  }
+
+
 }
 
 
 
 export interface Product {
-  id?:string;
-  code?:string;
-  name?:string;
-  description?:string;
-  price?:number;
-  quantity?:number;
-  inventoryStatus?:string;
-  category?:string;
-  image?:string;
-  rating?:number;
+  name:string;
+  descripcion:string;
+  precio:string;
+
+}
+export interface DialogData {
+  nombre:string;
+  descripcion:string;
+  precio:string;
 }
