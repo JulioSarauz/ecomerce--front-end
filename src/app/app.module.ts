@@ -43,7 +43,7 @@ import { TarjetaComponent } from './rutas/cliente/tarjeta/tarjeta.component';
 import {TableModule} from 'primeng/table';
 import { PagoComponent } from './rutas/cliente/pago/pago.component';
 import {MatStepperModule} from '@angular/material/stepper';
-
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -91,13 +91,13 @@ import {MatStepperModule} from '@angular/material/stepper';
     DialogModule,
     RippleModule,
     MatStepperModule,
+    MatSelectModule,
     FormsModule,
-    FormControl,
+    MatFormFieldModule,
     ReactiveFormsModule
     
   ],
   providers: [
-
     MessageService
   ],
   bootstrap: [AppComponent]

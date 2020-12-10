@@ -1,38 +1,56 @@
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-  </button>
-  <mat-horizontal-stepper #stepper>
-    <mat-step  label="Fill out your address">
-      <form>
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step   label="Fill out your address">
-      <form >
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                 required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
+
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Selecciona tipo de pago</ng-template>
+      
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Forma de pago</mat-label>
+        <mat-select [(value)]="select">
+          <mat-option *ngFor="let food of pagos" [value]="food.id" formControlName="firstCtrl" ngDefaultControl >
+            {{food.tipo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperNext (click)="siguienteFunc()">Siguiente</button>
       </div>
-    </mat-step>
-  </mat-horizontal-stepper>
+    </form>
+  </mat-step>
+
+
+  <mat-step [stepControl]="secondFormGroup" label="Monto">
+    <form [formGroup]="secondFormGroup">
+      <mat-form-field>
+        <mat-label>Monto a cancelar</mat-label>
+       
+        <input matInput formControlName="secondCtrl" placeholder="Ex. $200" required>
+      </mat-form-field>
+
+      <div *ngIf="tipoPago === 2">
+           
+        <mat-form-field appearance="fill">
+          <mat-label>Sleccione tarjeta</mat-label>
+          <mat-select [(value)]="select2">
+            <mat-option *ngFor="let food of customers" [value]="food.codigo">
+              {{food.codigo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> 
+      </div>
+
+      <div>
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>Transacción finalizada</p>
+    <div>
+      <button mat-button (click)="onNoClick()">FINALIZAR</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
