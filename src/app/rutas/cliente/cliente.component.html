@@ -1,24 +1,43 @@
 <p-toast></p-toast>
 
-<div>
-    <p-megaMenu [model]="items" ></p-megaMenu>
+<div *ngIf="Admin==1" id="header" style=" background-color: rgb(35, 180, 173); text-align: center;" > 
+          <a class="navbar-brand" href="cliente"><img src="../../../../../assets/img/logo.png" alt="#" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#show-menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+ </div>
+
+
+ <div *ngIf="Admin==0" id="header" style=" background-color:rgb(3, 20, 56); text-align: center;" > 
+    <a class="navbar-brand" href="cliente"><img src="../../../../../assets/img/logo.png" alt="#" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#show-menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div  *ngIf="Admin==1" style="background-color: rgb(35, 180, 173); padding-top: 3%; padding-bottom:2%;" >
+    <p-megaMenu [model]="items"></p-megaMenu>
+</div>
+
+
+<div  *ngIf="Admin==0" style="background-color:rgb(3, 20, 56); padding-top: 3%; padding-bottom:2%;" >
+    <p-megaMenu [model]="items"></p-megaMenu>
 </div>
 
 
 
-
-
-    <div style="padding: 5%;">
-        <button pButton pRipple type="button" icon="pi pi-id-card"  label="Gestionar Tarjetas" class="p-button-outlined p-button-help" (click)="openDialogTarjeta()"></button>
+    <div style="padding: 5%; background-color: rgba(88, 160, 219, 0.377);">
+        <button *ngIf="Admin === 0" style="margin-bottom:3%; border-color: rgb(0, 0, 85); color: rgb(0, 0, 85);" pButton pRipple type="button" icon="pi pi-user"  label="Ver Información Cliente" class="p-button-outlined p-button-help" (click)="verInformacion()"></button>
+        <button *ngIf="Admin === 0" style="margin-bottom:3%; border-color: rgb(0, 0, 85); color: rgb(0, 0, 85);" pButton pRipple type="button" icon="pi pi-id-card"  label="Gestionar Tarjetas" class="p-button-outlined p-button-help" (click)="openDialogTarjeta()"></button>
+        <button *ngIf="Admin === 0" style="margin-bottom:3%; border-color: rgb(0, 0, 85); color: rgb(0, 0, 85);" pButton pRipple type="button" icon="pi pi-shopping-cart"  label="Ver Carrito" class="p-button-outlined p-button-help" (click)="verCarrito()"></button>
+        
         <div class="card">
             <p-dataView #dv [value]="products" [paginator]="true" [rows]="5" filterBy="name"
                 [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
-                <ng-template pTemplate="header">
-                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between" >
-                        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
-                            <i class="pi pi-search"></i>
-                            <input type="search" pInputText placeholder="Buscar por nombre" (input)="dv.filter($event.target.value)">
-                            <button pButton pRipple type="button" label="Añadir" class="p-button-outlined" (click)="openDialog()"></button>
+                <ng-template pTemplate="header" >
+                    <div style="background-color: rgb(0, 0, 0); padding: 2%; border-spacing: 2%;" class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between" >
+                        <span *ngIf="Admin === 1" class="p-input-icon-left p-mb-2 p-mb-md-0">
+                            <button pButton pRipple style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255);" type="button" label="Añadir Productos" class="p-button-outlined" (click)="openDialog()"></button>
                         </span>
                         <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
                     </div>
@@ -35,7 +54,9 @@
                             </div>
                             <div class="product-list-action">
                                 <span class="product-price">${{product.precio}}</span>
-                                <p-button icon="pi pi-shopping-cart" label="Add to Cart" (click)="obtenerPaga()"></p-button>
+                                <!-- <p-button icon="pi pi-shopping-cart" label="PAGAR" (click)="obtenerPaga()"></p-button> -->
+                                <p-button *ngIf="Admin === 0" icon="pi pi-shopping-cart" label="Agregar" (click)="ingresarNumeroProductos(product)"></p-button>
+                                <!--p-button icon="pi pi-shopping-cart" label="Add to Cart" (click)="eliminarProducto(product.id_producto,product.nombre,product.descripcion,product.precio)"></p-button-->
                                 <span [class]="'product-badge status-' + product.nombre.toLowerCase()">{{product.nombre}}</span>
                             </div>
                         </div>
@@ -59,7 +80,8 @@
                             </div>
                             <div class="product-grid-item-bottom">
                                 <span class="product-price">${{product.precio}}</span>
-                                <p-button icon="pi pi-shopping-cart" (click)="obtenerPaga()"></p-button>
+                                <p-button *ngIf="Admin === 0" icon="pi pi-shopping-cart" (click)="ingresarNumeroProductos(product)"></p-button>
+                                <!--p-button icon="pi pi-shopping-cart" (click)="eliminarProducto(product.id_producto,product.nombre,product.descripcion,product.precio)"></p-button-->
                             </div>
                         </div>
                     </div>

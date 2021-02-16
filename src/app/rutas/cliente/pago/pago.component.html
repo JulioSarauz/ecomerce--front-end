@@ -4,7 +4,7 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Selecciona tipo de pago</ng-template>
       
-      
+      <div style="padding: 25%; padding-left: 40%;">
       <mat-form-field appearance="fill">
         <mat-label>Forma de pago</mat-label>
         <mat-select [(value)]="select">
@@ -14,19 +14,56 @@
         </mat-select>
       </mat-form-field>
       <div>
+      </div>
+      <div>
         <button mat-button matStepperNext (click)="siguienteFunc()">Siguiente</button>
       </div>
+    </div>
     </form>
   </mat-step>
 
 
   <mat-step [stepControl]="secondFormGroup" label="Monto">
     <form [formGroup]="secondFormGroup">
-      <mat-form-field>
-        <mat-label>Monto a cancelar</mat-label>
-       
-        <input matInput formControlName="secondCtrl" placeholder="Ex. $200" required>
-      </mat-form-field>
+    
+      <div style="margin-left: 0%; margin-top: 10%;">
+
+        <table style="padding: 5%;
+        border-radius: 10px 10px 10px 10px;
+        background-color:darkblue; 
+        color:white; 
+        border-collapse: separate;
+        border-spacing: 15px 25px;">
+          <tr style="font-size:20px;">
+            <td>Nombre</td>
+            <td>Descripcion</td>
+            <td>Precio</td>
+            <td>Numero</td>
+            <td>Total</td>
+            
+            <td></td>
+          </tr>
+          <tr *ngFor="let d of data" style="text-align: center;">
+            <td>{{d.nombre}}</td>
+            <td>{{d.descripcion}}</td>
+            <td>{{d.precio}}</td>
+            <td>{{d.numero}}</td>
+            <td>{{d.total}}</td>
+          </tr>
+          <tr>
+            <td>IVA</td>
+            <td>12%</td>
+          </tr>
+          <tr>
+            <td>TOTAL</td>
+            <td>{{ totalapagar }}</td>
+          </tr>
+        </table>
+      </div>
+     
+
+      <div style="padding: 25%; padding-left: 40%;">
+      
 
       <div *ngIf="tipoPago === 2">
            
@@ -39,18 +76,22 @@
           </mat-select>
         </mat-form-field> 
       </div>
-
       <div>
         <button mat-button matStepperPrevious>Anterior</button>
         <button mat-button matStepperNext>Siguiente</button>
       </div>
+    </div>
+      
     </form>
   </mat-step>
   <mat-step>
+
+    <div style="padding: 25%; padding-left: 40%;">
     <ng-template matStepLabel>Done</ng-template>
     <p>Transacción finalizada</p>
     <div>
       <button mat-button (click)="onNoClick()">FINALIZAR</button>
     </div>
+  </div>
   </mat-step>
 </mat-horizontal-stepper>

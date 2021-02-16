@@ -5,6 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductoService } from '../../modelo/servicios/producto/producto.service';
 import { TarjetaComponent } from './tarjeta/tarjeta.component';
 import { PagoComponent } from './pago/pago.component';
+import { style } from '@angular/animations';
+import { InfoComponent } from './info/info.component';
+import { CarritoComponent } from './carrito/carrito.component';
+import { AgregarComponent } from './agregar/agregar.component';
 
 @Component({
   selector: 'app-cliente',
@@ -20,7 +24,9 @@ export class ClienteComponent implements OnInit {
   items: MegaMenuItem[];
   clienteDta:any;
   Nombre:string;
-  name:string
+  name:string;
+  Admin: number;
+  carrito: any[]=[];
 
   constructor(
       private messageService:MessageService,
@@ -29,16 +35,30 @@ export class ClienteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.productService.getProducts().then(data => this.products = data);
-    this._productsService.obtenerProductos().subscribe((data)=>{this.products = data.data;});
+    this.cargarCliente();
+  }
+
+
+
+  cargarCliente(){
+    this._productsService.obtenerProductos().subscribe((data)=>{
+      this.products = data.data;
+    });
     
     this.clienteDta = JSON.parse(localStorage.getItem('ClienteData'));
-
-    console.log(this.clienteDta);
     this.Nombre = this.clienteDta.fk_cliente.nombres;
+   this.cargarTipoUsuario(this.Nombre);
     this.mostrarMensaje(1,'Bienvenido','Logeo Exitoso!');
     this.cargaritem();
+  }
 
+
+  cargarTipoUsuario(Nombre:String){
+    if(Nombre === 'admin'){
+      this.Admin = 1;
+    }else{
+      this.Admin= 0;
+    }
   }
 
 
@@ -68,7 +88,6 @@ export class ClienteComponent implements OnInit {
     this.items = [
       {
         label:'Bienvenido '+this.Nombre, icon: 'pi pi-fw pi-user'
-
       },
       {
           label: 'Opciones', icon: 'pi pi-fw pi-cog',
@@ -87,8 +106,6 @@ export class ClienteComponent implements OnInit {
 
 
   openDialog(): void {
-    
-    
     const dialogRef = this.dialog.open(ProductoComponent, {
       width: '250px',
       height: '50%',
@@ -99,9 +116,8 @@ export class ClienteComponent implements OnInit {
       if(result){
         this._productsService.IngresarProducto(result.nombre, result.descripcion, result.precio).subscribe((ingreo)=>{
           this._productsService.obtenerProductos().subscribe((data)=>{
-
-          console.log(data);
             this.products = data.data;
+            
           });
         });
        
@@ -118,39 +134,83 @@ export class ClienteComponent implements OnInit {
 
 
 
-  openDialogTarjeta(): void {
-    
-    
+  openDialogTarjeta(): void {  
     const dialogRef = this.dialog.open(TarjetaComponent, {
       width: '800px',
       height: '80%',
       data: {name: "Tarjetas"}
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-       
+    dialogRef.afterClosed().subscribe(result => {   
     });
   }
 
 
 
-  obtenerPaga(): void {
-    
-    
-    const dialogRef = this.dialog.open(PagoComponent, {
-      width: '800px',
-      height: '80%',
-      data: {name: "Tarjetas"}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-       
+  
+  verInformacion(): void {
+    const dialogRef = this.dialog.open(InfoComponent, {
+      width: '700px',
+      height: '60%',
+      data: {name: "Informacion"}
+    });
+    dialogRef.afterClosed().subscribe(result => {   
     });
   }
+
+  ingresarNumeroProductos(item): void {
+    const dialogRef = this.dialog.open(AgregarComponent, {
+      width: '250px',
+      height: '40%',
+      data: item
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.agregarCarrito(item,result);
+    });
+  }
+
+
+
+
+  eliminarProducto(id,nombre,descripcion,precio){
+    this._productsService.eliminarProducto(id,nombre,descripcion,precio,0).subscribe((res)=>{
+      this._productsService.obtenerProductos().subscribe((data)=>{
+        this.products = data.data;
+      });
+    });
+  }
+
+  agregarCarrito(item,numero){
+    this.mostrarMensaje(1,"Producto agregado con exito","EXITO");
+    item.numero = numero;
+    item.total = item.precio * numero;
+    this.carrito.push(item);
+  }
+
+  limpiarCarrito(){
+
+  }
+
+  verCarrito(): void {
+    const dialogRef = this.dialog.open(CarritoComponent, {
+      width: '700px',
+      height: '60%',
+      data: this.carrito
+    });
+    dialogRef.afterClosed().subscribe(result => {   
+    });
+  }
+
+
 
 
 
 }
+
+
+
+
 
 export interface Product {
   name:string;
@@ -159,6 +219,7 @@ export interface Product {
 
 }
 export interface DialogData {
+  id:number;
   nombre:string;
   descripcion:string;
   precio:string;

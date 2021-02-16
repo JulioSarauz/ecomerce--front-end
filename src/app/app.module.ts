@@ -44,7 +44,11 @@ import {TableModule} from 'primeng/table';
 import { PagoComponent } from './rutas/cliente/pago/pago.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSelectModule} from '@angular/material/select';
-
+import { InfoComponent } from './rutas/cliente/info/info.component';
+import {InputMaskModule} from 'primeng/inputmask';
+import { CarritoComponent } from './rutas/cliente/carrito/carrito.component';
+import { AgregarComponent } from './rutas/cliente/agregar/agregar.component';
+import { InicioComponent } from './rutas/inicio/inicio.component';
 
 
 @NgModule({
@@ -56,6 +60,10 @@ import {MatSelectModule} from '@angular/material/select';
     ProductoComponent,
     TarjetaComponent,
     PagoComponent,
+    InfoComponent,
+    CarritoComponent,
+    AgregarComponent,
+    InicioComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,7 +102,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSelectModule,
     FormsModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputMaskModule
     
   ],
   providers: [

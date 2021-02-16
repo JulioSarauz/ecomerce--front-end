@@ -1,0 +1,43 @@
+<div class="container info">
+    <div class="row">
+      <div class="col-sm titulo">
+       INFORMACIÓN CLIENTE
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">    
+            <b>CÓDIGO:</b> {{clienteDta.id_cliente}}    
+        </div>
+        <div class="col-sm">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+            <b>NOMBRES:</b> {{clienteDta.nombres}}
+        </div>
+        <div class="col-sm">
+            <b>CÉDULA:</b> {{clienteDta.cedula}}
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm">  
+                 <b>DIRECCIÓN:</b>{{clienteDta.direccion}}
+        </div>
+        <div class="col-sm">
+         <b>TELÉFONO</b>{{clienteDta.telefono}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+            <b>E-MAIL:</b>{{clienteDta.correo}}
+        </div>
+        <div class="col-sm">
+            <button pButton pRipple style="background-color: rgb(0, 0, 85);" type="button" label="Aceptar" class="p-button-rounded p-button-danger"  (click)="onNoClick()"></button>
+        </div>
+      </div>
+  </div>

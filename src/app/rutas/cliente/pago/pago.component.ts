@@ -24,6 +24,7 @@ export class PagoComponent implements OnInit {
   tipoPago:number;
   select:string;
   select2:string;
+  totalapagar:number;
 
 
   constructor(
@@ -31,16 +32,22 @@ export class PagoComponent implements OnInit {
     private readonly _pagoService:PagoService,
     private readonly _tarjetaService:TarjetaService,
     public dialogRef: MatDialogRef<ClienteComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: pagoData) {}
+    @Inject(MAT_DIALOG_DATA) public data) {}
 
   ngOnInit(){
 
+    console.log(this.data);
+    this.totalapagar=0;
+    for(let d of this.data){
+      this.totalapagar = this.totalapagar + d.total;
+    }
+    this.totalapagar = this.totalapagar + (this.totalapagar * 0.12);
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.nullValidator],
       selectPago: ['',Validators.nullValidator]
     });
     this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      secondCtrl: ['', Validators.nullValidator]
     });
 
 
@@ -52,7 +59,7 @@ export class PagoComponent implements OnInit {
      }});
 
      this.usuario = JSON.parse(localStorage.getItem('ClienteData'))
-     this._tarjetaService.obtenerTarjetas(this.usuario.id_usuario).subscribe((customers) => {
+     this._tarjetaService.obtenerTarjetas(this.usuario.fk_cliente.id_cliente).subscribe((customers) => {
       this.customers = customers.data});
   }
 
@@ -64,8 +71,6 @@ export class PagoComponent implements OnInit {
   siguienteFunc(){
     this.tipoPago = +this.select;
     console.log(this.select);
-    
-    
   }
 
 }

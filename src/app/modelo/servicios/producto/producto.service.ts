@@ -27,4 +27,14 @@ export class ProductoService {
   obtenerProductos(): Observable<any>{
     return this.http.get(`${environment.host}/products`);
   }
+
+  eliminarProducto(id,nombre,descirpcion,precio,estado):Observable<any>{
+    this.url=`${environment.host}/products?id=${id}`;
+    return this.http.patch(this.url,{
+      nombre:nombre,
+      descripcion:descirpcion,
+      precio:precio,
+      estado:estado,
+    });
+  }
 }

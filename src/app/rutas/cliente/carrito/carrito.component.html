@@ -1,0 +1,60 @@
+<div>
+    <h1 class="titulo">CARRITO DE COMPRAS</h1>
+    <h3>Productos:</h3>
+
+
+    <div *ngIf="data.length === 0">
+        No existen productos seleccionados
+    </div>
+    <div>
+        <div *ngIf="data.length !== 0" class="card">
+            <p-table [value]="data" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" 
+                currentPageReportTemplate="Productos {first} de {last} de {totalRecords} entradas" [rowsPerPageOptions]="[10,25,50]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>NOMBRE</th>
+                        <th>DESCRIPCIÓN</th>
+                        <th>PRECIO</th>
+                        <th>UNIDADES</th>
+                        <th>TOTAL</th>
+                        <th>OPCIONES</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>{{customer.nombre}}</td>
+                        <td>{{customer.descripcion}}</td>
+                        <td>{{customer.precio}}</td>
+                        <td>{{customer.numero}}</td>
+                        <td>{{ customer.total }}</td> 
+                        <td>
+                            <p-button (click)="quitarCarrito(customer)">
+                                <i class="pi pi-times " styleClass="p-button-text"></i>
+                            </p-button> 
+                        </td>
+                      </tr>
+                </ng-template>
+            </p-table>  
+            <div>
+            </div>
+            
+            <div mat-dialog-actions >
+                <button  pButton pRipple style="background-color: rgb(0, 0, 85);" type="button" label="Pagar" class="p-button-rounded p-button-danger"  (click)="obtenerPaga()"></button>
+            </div>
+        
+        </div>
+
+        
+        
+        <div style="padding-top: 10px;">
+            <div mat-dialog-actions >
+                <button  pButton pRipple style="background-color: rgb(0, 0, 85);" type="button" label="Salir" class="p-button-rounded p-button-danger"  (click)="onNoClick()"></button>
+            </div>
+        </div>
+          
+    </div>
+    
+
+
+
+</div>

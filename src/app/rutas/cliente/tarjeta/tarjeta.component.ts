@@ -24,7 +24,7 @@ export class TarjetaComponent implements OnInit {
 
   ngOnInit(){
     this.usuario = JSON.parse(localStorage.getItem('ClienteData'))
-    this._tarjetaService.obtenerTarjetas(this.usuario.id_usuario).subscribe((customers) => {
+    this._tarjetaService.obtenerTarjetas(this.usuario.fk_cliente.id_cliente).subscribe((customers) => {
       this.customers = customers.data});
   }
 
@@ -33,11 +33,13 @@ export class TarjetaComponent implements OnInit {
   }
 
   crearTarjeta(){
-    console.log(this.usuario);
-    console.log(this.data);
+    console.log(this.usuario.fk_cliente);
     if(this.data.codigo !== undefined && this.data.fecha !== undefined && this.data.cvv !== undefined ){
-      this._tarjetaService.IngresarTarjetas(this.data.codigo,this.data.fecha,this.data.fecha,this.usuario.id_usuario).subscribe((res)=>{
-        this._tarjetaService.obtenerTarjetas(this.usuario.id_usuario).subscribe((tarjetas)=>{
+
+      this._tarjetaService.IngresarTarjetas(this.data.codigo,this.data.fecha,this.data.cvv,this.usuario.fk_cliente.id_cliente).subscribe((res)=>{
+        this._tarjetaService.obtenerTarjetas(this.usuario.fk_cliente.id_cliente).subscribe((tarjetas)=>{
+          console.log(tarjetas);
+          
           this.customers = tarjetas.data
         });
       });

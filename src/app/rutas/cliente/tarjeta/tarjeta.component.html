@@ -1,6 +1,8 @@
-<table>
+
+
+<table style="color: rgb(0, 0, 85);">
     <tr>
-        <td colspan="2"><h1>Ingresa un nuevo producto</h1></td>
+        <td colspan="2" style="text-align: center;"><h1>Ingresa una nueva tarjeta</h1></td>
     </tr>
     <tr>
         <td>
@@ -8,7 +10,7 @@
                 
                 <mat-form-field>
                   <mat-label>Código</mat-label>
-                  <input matInput [(ngModel)]="data.codigo">
+                  <input  matInput [(ngModel)]="data.codigo">
                 </mat-form-field>
             </div>
         </td>
@@ -34,7 +36,9 @@
         </td>
         <td></td>
         <td>
-            <p-button label="Añadir" icon="pi pi-plus" styleClass="p-button" (click)="crearTarjeta()"></p-button>
+            <button style="margin-bottom:3%; border-color: rgb(0, 0, 85); color: rgb(0, 0, 85);" 
+            pButton pRipple type="button" icon="pi pi-plus"  label="Añadir" 
+            class="p-button-outlined p-button-help" (click)="crearTarjeta()"></button>
         </td>
     </tr>
 </table>
@@ -46,7 +50,6 @@
 
 
 <div class="card">
-    <h5>Implicit Pagination</h5>
     <p-table [value]="customers" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" 
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
@@ -75,5 +78,5 @@
 
 
   <div mat-dialog-actions>
-    <button pButton pRipple type="button" label="Salir" class="p-button-rounded p-button-danger"  (click)="onNoClick()"></button>
+    <button pButton pRipple style="background-color: rgb(0, 0, 85);" type="button" label="Salir" class="p-button-rounded p-button-danger"  (click)="onNoClick()"></button>
   </div>

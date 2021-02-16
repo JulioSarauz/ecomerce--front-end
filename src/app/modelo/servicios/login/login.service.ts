@@ -26,5 +26,9 @@ export class LoginService {
   buscarUsuarios(): Observable<any>{
     return this.http.get(`${environment.host}/usuario`);
   }
+  buscarUsuariosxNombre(usr): Observable<any>{
+    return this.http.get(`${environment.host}/usuario/${usr}`);
+  }
+  
 
 }

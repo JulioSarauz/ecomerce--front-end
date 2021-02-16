@@ -1,0 +1,13 @@
+<div style="text-align: center;">
+    <h1>Ingrese numero de {{ nombre }}</h1>
+
+    <mat-list-item> 
+        <span class="p-float-label" >
+            <input id="float-input" type="text" style="width: 25%;"  [(ngModel)]="numero" pInputText required> 
+        </span>
+    </mat-list-item>
+    <div mat-dialog-actions >
+        <button  pButton pRipple style="background-color: rgb(0, 0, 85);" type="button" label="Aceptar" class="p-button-rounded p-button-danger"  (click)="onNoClick()"></button>
+      </div>
+
+</div>

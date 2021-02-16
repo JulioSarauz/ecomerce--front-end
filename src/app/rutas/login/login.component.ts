@@ -64,6 +64,10 @@ export class LoginComponent implements OnInit {
     //
   }
 
+  regresar(){
+    this.router.navigate(['inicio']);
+  }
+
   mostrarMensaje(tipo:number,msm:string,tit:string) {
     if(tipo == 1)
     this.messageService.add({severity:'success', summary:msm, detail:tit});
@@ -76,6 +80,7 @@ export class LoginComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(RegistroComponent, {
       width: '800px',
+      height: '75%',
       data: {
         user: this.user,
         name: this.name,
@@ -93,55 +98,94 @@ export class LoginComponent implements OnInit {
     //REGISTRO
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      if(
-        result.user !== undefined &&
-        result.name !== undefined &&
-        result.cedula !== undefined &&
-        result.correo !== undefined &&
-        result.telefono !== undefined &&
-        result.direccion !== undefined &&
-        result.pass !== undefined &&
-        result.pass2 !== undefined
-        ){
-
-          if(result.pass == result.pass2){
-              
-
-          
-              this.guardarInfo(result);
-            
-
-
-            
-            this.mostrarMensaje(1,'Exito','Su cuenta fue creada!');
-            
-            
+      
+      if(result!== undefined){
+        if(
+          result.user !== undefined &&
+          result.name !== undefined &&
+          result.cedula !== undefined &&
+          result.correo !== undefined &&
+          result.telefono !== undefined &&
+          result.direccion !== undefined &&
+          result.pass !== undefined &&
+          result.pass2 !== undefined
+          ){
+            if(result.pass == result.pass2){
+              if(result.cedula.length === 10){  
+                if(this.soloNumeros(result.cedula)){
+                if(this.validarCorreo(result.correo)){
+                  if(this.soloNumeros(result.telefono)){
+                      result.name = result.name.toUpperCase(); 
+                      this.guardarInfo(result);
+                      this.mostrarMensaje(1,'Exito','Su cuenta fue creada!');
+                  }else{
+                    this.mostrarMensaje(3,'Teléfono no válido','Telefono solo debe tener números');
+                  }                
+                }else{
+                  this.mostrarMensaje(3,'Correo Inválido','Ingrese un correo válido');
+                }
+              }else{
+                this.mostrarMensaje(3,'Cedula Incorrecta','La cédula debe tener solo caracteres numéricos');
+              }
+              }else{
+                this.mostrarMensaje(3,'Cedula Incorrecta','La cédula debe tener 10 caracteres');
+              }
+            }else{
+              this.mostrarMensaje(3,'Contraseña Incorrecta','Las contraseñas no son iguales');
+            }
           }else{
-            this.mostrarMensaje(3,'Contraseña Incorrecta','Las contraseñas no son iguales');
+            console.log("NO TIENE DATOS");
+            this.mostrarMensaje(3,'Datos Incompletos','Debe completar todos los campos');
           }
-        }else{
-          console.log("NO TIENE DATOS");
-          this.mostrarMensaje(3,'Datos Incompletos','Debe completar todos los campos');
-        }
+      }else{
+        this.mostrarMensaje(2 ,'Registro Cancelado','Acaba de cancelár su registro');
+      }
+      
     });
   }
 
+  validarCorreo(correo: string){
+      let pasa = false;
+      let aux = correo.split('.');
+      let aux2 = correo.split('.com');
+      let aux3 = correo.split('.es');
+      let aux4 = correo.split('@');
+      if(aux.length > 1 && aux4.length > 1&&  (aux2.length > 1 || aux3.length > 1)){
+        pasa = true;
+      }
+      return pasa;
+  }
 
-  async guardarInfo(result){
+
+  soloNumeros(cadena){
+    let pasa = false;
+    let numeros = [0,1,2,3,4,5,6,7,8,9]
+    for(let c of cadena){
+      if(c in numeros){
+        pasa = true;
+      }else{
+        return pasa = false;
+      }
+    }
+    return pasa;
+  }
+
+ async guardarInfo(result){
     console.log("****SERVICIO*****");
-    await this.loginservice.ingresoUsuario(result.user,result.pass).subscribe((newuser)=>{
-      this.loginservice.buscarUsuarios().subscribe((user)=>{
-        let idUsuario=user.data.length;
-        console.log(user.data.lenght);
-        
-        console.log(idUsuario);
-        
-        this._clienteService.ingresoCliente(result.name, result.cedula, result.correo, result.telefono, result.direccion,idUsuario);
+    await this.loginservice.ingresoUsuario(result.user,result.pass).subscribe( async (dta)=>{
+     
+      await this.loginservice.buscarUsuariosxNombre(dta.data.user).subscribe(async (user)=>{
+        console.log(user);
+        await this.crearcliente(result,user);
       });
+      
     });
-    
-       
   }
+
+  crearcliente(result,user){
+    this._clienteService.ingresoCliente(result.name, result.cedula, result.correo, result.telefono, result.direccion,user.id_usuario);  
+  }
+  
 
 }
 
